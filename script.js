@@ -13,12 +13,11 @@ for (let row = 0; row < 10; row++) {
         if (col === 0) {
             arr[row][col] = document.createElement('div');
             arr[row][col].setAttribute('style', 'display: flex; flex: 1');
-        } else{
-        arr[row][col] = document.createElement('div');
-        arr[row][col].textContent = '?';
-        arr[row][col].setAttribute('style', 'flex: 1; color: blue');
-        arr[row][col].addEventListener('mouseenter', changeColorBlack);
-        arr[row][0].appendChild(arr[row][col]);
+        } else {
+            arr[row][col] = document.createElement('div');
+            arr[row][col].setAttribute('style', 'flex: 1; color: blue');
+            arr[row][col].addEventListener('mouseenter', changeColorBlack);
+            arr[row][0].appendChild(arr[row][col]);
         }
     }
     canvas.appendChild(arr[row][0]);
@@ -36,9 +35,38 @@ function changeColorBlack(e) {
     e.stopPropagation();
 
 }
+function createCanvas() {
+    arr = []
+    let size;
+
+    do {
+        size = prompt('How large do you want the grid to be? (maximum 100)');
+        if (size === null) return;
+        size = parseInt(size);
+    } while ((size < 1 || size > 100 || isNaN(size)) && size !== null)
+
+
+    for (let row = 0; row < size; row++) {
+        arr[row] = []
+        for (let col = 0; col < size + 1; col++) {
+            if (col === 0) {
+                arr[row][col] = document.createElement('div');
+                arr[row][col].setAttribute('style', 'display: flex; flex: 1');
+            } else {
+                arr[row][col] = document.createElement('div');
+                arr[row][col].setAttribute('style', 'flex: 1; color: blue');
+                arr[row][col].addEventListener('mouseenter', changeColorBlack);
+                arr[row][0].appendChild(arr[row][col]);
+            }
+        }
+        canvas.appendChild(arr[row][0]);
+
+    }
+}
 
 function clearCanvas() {
-    divs.forEach(div => {
-        div.style.backgroundColor='white'
-    })
+    while (canvas.firstChild) {
+        canvas.removeChild(canvas.lastChild);
+    }
+    createCanvas();
 }
